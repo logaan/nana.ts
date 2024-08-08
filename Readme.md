@@ -11,7 +11,7 @@ The top level expression in a file can omit parenthesis. This allows us Module d
 
 Functions can be called like `print("Hello world")`.
 
-```
+``` ruby
 Module hello-world []
 
 greeting "Hello"
@@ -19,7 +19,7 @@ greeting "Hello"
 greet Fn([name]
   print(greeting name))
 
-fn-test greet("World")
+test greet("World")
 ```
 
 This example defines a module called `hello-world`.
@@ -30,7 +30,7 @@ The name `greeting` is assigned the value `"Hello"`.
 
 The name `greet` is assigned to a function that prints the `greeting` we defined above, and a name provided when the `Fn` is called.
 
-We call `greet` as we define `fn-test`. `"Hello World"` is printed to the screen.
+We call `greet` as we define `test`. `"Hello World"` is printed to the screen.
 
 ## Design goals
 
