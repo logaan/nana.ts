@@ -5,4 +5,9 @@ greeting "Hello"
 greet Fn([name]
   print(greeting name))
 
-test greet("Logan")
+fn-test greet("Logan")
+
+ignore Macro([expression]
+  print("Printing what I want instead"))
+
+macro-test ignore(print("This text won't be printed"))
