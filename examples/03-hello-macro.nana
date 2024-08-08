@@ -1,0 +1,3 @@
+Macro([ignored-expression]
+  print("This will print"))
+  (print "This won't print")

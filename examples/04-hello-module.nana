@@ -1,0 +1,8 @@
+Module hello-world []
+
+greeting "Hello"
+
+greet Fn([name]
+  print(greeting name))
+
+test greet("Logan")

@@ -1,4 +1,1 @@
-Module hello-world []
-
-greet Fn([name]
-  print(str("Hello " name "!")))
+print "Hello world"
