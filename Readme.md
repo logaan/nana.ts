@@ -11,7 +11,7 @@ The top level expression in a file can omit parenthesis. This allows us Module d
 
 Functions can be called like `print("Hello world")`.
 
-``` ruby
+``` haskell
 Module hello-world []
 
 greeting "Hello"
