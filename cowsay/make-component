@@ -2,4 +2,15 @@
 
 cd cowsay
 npx jco componentize cowsay.js --wit cowsay.wit -o cowsay.wasm
+
+## Make it callable from JS
 npx jco transpile cowsay.wasm -o cowsay
+node test.js
+
+## Run it from the command line
+npx jco run cowsay.wasm
+
+## Run it in a repl
+# rm cow-virt.wasm
+# wasi-virt cowsay.wasm -o cow-virt.wasm
+wepl cowsay.wasm

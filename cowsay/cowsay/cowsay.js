@@ -46,6 +46,14 @@ function clampGuest(i, min, max) {
   return i;
 }
 
+class ComponentError extends Error {
+  constructor (value) {
+    const enumerable = typeof value !== 'string';
+    super(enumerable ? `${String(value)} (see error.payload)` : value);
+    Object.defineProperty(this, 'payload', { value, enumerable });
+  }
+}
+
 let curResourceBorrows = [];
 
 let dv = new DataView(new ArrayBuffer());
@@ -5572,6 +5580,8 @@ function trampoline71(arg0) {
 }
 let exports3;
 let postReturn0;
+let postReturn1;
+let postReturn2;
 function trampoline0(handle) {
   const handleEntry = rscTableRemove(handleTable1, handle);
   if (handleEntry.own) {
@@ -5664,6 +5674,16 @@ function trampoline25(handle) {
   }
 }
 
+function repl() {
+  const ret = exports1.repl();
+  var ptr0 = dataView(memory0).getInt32(ret + 0, true);
+  var len0 = dataView(memory0).getInt32(ret + 4, true);
+  var result0 = utf8Decoder.decode(new Uint8Array(memory0.buffer, ptr0, len0));
+  const retVal = result0;
+  postReturn0(ret);
+  return retVal;
+}
+
 function say(arg0, arg1) {
   var ptr0 = utf8Encode(arg0, realloc0, memory0);
   var len0 = utf8EncodedLen;
@@ -5702,8 +5722,38 @@ function say(arg0, arg1) {
   var len3 = dataView(memory0).getInt32(ret + 4, true);
   var result3 = utf8Decoder.decode(new Uint8Array(memory0.buffer, ptr3, len3));
   const retVal = result3;
-  postReturn0(ret);
+  postReturn1(ret);
   return retVal;
+}
+
+function run() {
+  const ret = exports1['run#run']();
+  let variant0;
+  switch (ret) {
+    case 0: {
+      variant0= {
+        tag: 'ok',
+        val: undefined
+      };
+      break;
+    }
+    case 1: {
+      variant0= {
+        tag: 'err',
+        val: undefined
+      };
+      break;
+    }
+    default: {
+      throw new TypeError('invalid variant discriminant for expected');
+    }
+  }
+  const retVal = variant0;
+  postReturn2(ret);
+  if (typeof retVal === 'object' && retVal.tag === 'err') {
+    throw new ComponentError(retVal.val);
+  }
+  return retVal.val;
 }
 
 const $init = (() => {
@@ -5905,7 +5955,9 @@ const $init = (() => {
         '9': trampoline37,
       },
     }));
-    postReturn0 = exports1['cabi_post_cow#say'];
+    postReturn0 = exports1.cabi_post_repl;
+    postReturn1 = exports1['cabi_post_cow#say'];
+    postReturn2 = exports1['cabi_post_run#run'];
   })();
   let promise, resolve, reject;
   function runNext (value) {
@@ -5935,5 +5987,9 @@ const cow = {
   say: say,
   
 };
+const run$1 = {
+  run: run,
+  
+};
 
-export { cow,  }
+export { cow, repl, run$1 as run,  }

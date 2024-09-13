@@ -7,4 +7,8 @@ world cowsay {
     }
     say: func(text: string, cow: option<cows>) -> string;
   }
+  export run: interface {
+    run: func() -> result;
+  }
+  export repl: func() -> string;
 }

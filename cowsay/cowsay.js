@@ -19,3 +19,13 @@ export const cow = {
         }
     }
 };
+
+export const run = {
+    run() {
+        console.log(cow.say("Hello from the command interface!"));
+    }
+};
+
+export function repl() {
+    return cow.say("Hello from the repl!");
+}

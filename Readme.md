@@ -41,3 +41,8 @@ By default code can not print to the screen, read from disk, communicate over th
 Nana will not provide features for programs to have private mutable state. Instead programs that require state must make use of globally visible, transactional, snapshotable state. This follows ideas from [Out of the Tar Pit](https://github.com/papers-we-love/papers-we-love/blob/main/design/out-of-the-tar-pit.pdf) and [Erlang Term Stores](https://www.erlang.org/docs/23/man/ets).
 
 Nana will support macros, green threads, tail call optimisation, continuations, and a debugger. Core data types will be immutable. It will be embedable into other languages, and be able to run in web browsers.
+
+## Installation
+
+    cargo install wepl --locked
+    cargo install --git https://github.com/bytecodealliance/wasi-virt

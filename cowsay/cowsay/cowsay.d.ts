@@ -17,4 +17,7 @@ import { WasiIoPoll } from './interfaces/wasi-io-poll.js';
 import { WasiIoStreams } from './interfaces/wasi-io-streams.js';
 import { WasiRandomRandom } from './interfaces/wasi-random-random.js';
 import { Cow } from './interfaces/cow.js';
+import { Run } from './interfaces/run.js';
 export const cow: typeof Cow;
+export const run: typeof Run;
+export function repl(): string;
