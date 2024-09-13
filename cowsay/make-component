@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd cowsay
+npx jco componentize cowsay.js --wit cowsay.wit -o cowsay.wasm
+npx jco transpile cowsay.wasm -o cowsay
