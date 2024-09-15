@@ -1,17 +1,35 @@
+# This is a comment
+# Comments start with a hash and run until the end of the line.
+
+# Each file contains one top level expression.
+# The top level expression can omit its parenthesis.
+# This file defines a module called `hello-world`.
+# `hello-world` does not have any imports.
 Module hello-world []
 
+# After the imports declaration a module expects a series of definitions.
+# Definitions comes in pairs. First is the name, and then the value.
+# Here we are giving the name `greeting` to the string `"Hello"`.
 greeting "Hello"
 
+# `geet` is a function that takes `name` as an argument.
+# The function will then print the `greeting` and `name`.
 greet Fn([name]
   print(greeting name))
 
+# Here we call `greet` with the name `"Logan"` and name the result `fn-test`.
 fn-test greet("Logan")
 
-Ignore Macro([expression]
-  print("Printing what I want instead")
-  
-  print("This also"))
+# Macros are powerful features that allow us to implement much of Nana in the
+# standard library of the language itself. Because macros dont act like normal
+# functions we avoid confusion by starting their name with an upper case letter.
 
+# You can write your own macros. `Ignore` will take an expression as an
+# argument, but never evaluate it. Instead it will print some other text.
+Ignore Macro([expression]
+  print("Printing what I want instead"))
+
+# Here we call our newly defined `Ignore` macro and see that its argument is not
+# evaluated.
 macro-test Ignore(print("This text won't be printed"))
 
-foo "foo ""bar"
