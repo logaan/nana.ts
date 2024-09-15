@@ -11,10 +11,12 @@
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.nana",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.nana",
+					"match": "\\b([A-Z][a-z]*)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.nana",
