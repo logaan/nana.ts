@@ -10,16 +10,25 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "nana",
-      "aliases": ["Nana", "nana"],
-      "extensions": ["nana"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "nana",
-      "scopeName": "source.nana",
-      "path": "./syntaxes/nana.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "nana",
+        "aliases": [
+          "Nana",
+          "nana"
+        ],
+        "extensions": [
+          "nana"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "nana",
+        "scopeName": "source.nana",
+        "path": "./syntaxes/nana.tmLanguage.json"
+      }
+    ]
   }
 }

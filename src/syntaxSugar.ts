@@ -1,3 +1,7 @@
+export function singleLineComments(fileContents: String) {
+    return fileContents.replace(/#.*/g, '')
+}
+
 export function wrapFileInParens(fileContents: String) {
     return "(" + fileContents.trim() + ")";
 }
@@ -9,5 +13,5 @@ export function moveFnCallParensToTheLeft(fileContents: String) {
 export function desugarFile(fileContents: String) {
     return wrapFileInParens(
         moveFnCallParensToTheLeft(
-            fileContents))
+            singleLineComments(fileContents)))
 }
