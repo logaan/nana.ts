@@ -7,7 +7,7 @@ greet Fn([name]
 
 fn-test greet("Logan")
 
-ignore Macro([expression]
+Ignore Macro([expression]
   print("Printing what I want instead"))
 
-macro-test ignore(print("This text won't be printed"))
+macro-test Ignore(print("This text won't be printed"))

@@ -1,0 +1,25 @@
+{
+  "name": "nana",
+  "displayName": "Nana",
+  "description": "Support for the Nana programming language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "nana",
+      "aliases": ["Nana", "nana"],
+      "extensions": ["nana"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "nana",
+      "scopeName": "source.nana",
+      "path": "./syntaxes/nana.tmLanguage.json"
+    }]
+  }
+}

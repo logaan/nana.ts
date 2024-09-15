@@ -46,3 +46,8 @@ Nana will support macros, green threads, tail call optimisation, continuations, 
 
     cargo install wepl --locked
     cargo install --git https://github.com/bytecodealliance/wasi-virt
+
+
+# TODO
+
+- [ ] Macros should return an s-expression and then have it evaluated, rather than just evaluating code as part of their body. Then we can macro-expand to view the results.
