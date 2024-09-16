@@ -1,4 +1,13 @@
-import { NData, NFunction, NFunctionBuiltin, NMacro, NMacroBuiltin, NString, NSymbol, NList } from './data';
+import { NSymbol } from "./data/nsymbol";
+import { NString } from "./data/nstring";
+import { NTuple } from "./data/ntuple";
+import { NList } from "./data/nlist";
+import { NMap } from "./data/nmap";
+import { NMacro } from "./data/nmacro";
+import { NMacroBuiltin } from "./data/nmacrobuiltin";
+import { NFunction } from "./data/nfunction";
+import { NFunctionBuiltin } from "./data/nfunctionbuiltin";
+import { NData } from "./data/ndata";
 
 export const environment: Map<String, NData> = new Map();
 

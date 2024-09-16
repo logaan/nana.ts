@@ -1,4 +1,9 @@
-import * as data from './data';
+import { NSymbol } from "./data/nsymbol";
+import { NString } from "./data/nstring";
+import { NTuple } from "./data/ntuple";
+import { NList } from "./data/nlist";
+import { NMap } from "./data/nmap";
+import { NData } from "./data/ndata";
 
 // TODO: We need to keep whitespace so that it can stay in strings
 export function tokenise(input: String) {
@@ -7,12 +12,12 @@ export function tokenise(input: String) {
 }
 
 export function parse(tokens: Array<String>, context: String | undefined = undefined) {
-    const processed: Array<data.NData> = [];
+    const processed: Array<NData> = [];
 
     var next;
     while (next = tokens.shift()) {
         if (next === '(') {
-            processed.push(new data.NTuple(parse(tokens, '(')))
+            processed.push(new NTuple(parse(tokens, '(')))
         } else if (next === ')') {
             if (context === '(') {
                 return processed;
@@ -20,7 +25,7 @@ export function parse(tokens: Array<String>, context: String | undefined = undef
                 throw "Closing a tuple that was not opened";
             }
         } else if (next === '[') {
-            processed.push(new data.NList(parse(tokens, '[')))
+            processed.push(new NList(parse(tokens, '[')))
         } else if (next === ']') {
             if (context === '[') {
                 return processed;
@@ -28,7 +33,7 @@ export function parse(tokens: Array<String>, context: String | undefined = undef
                 throw "Closing a list that was not opened";
             }
         } else if (next === '{') {
-            processed.push(new data.NMap(parseMap(tokens)))
+            processed.push(new NMap(parseMap(tokens)))
         } else if (next === '}') {
             if (context === '}') {
                 if (processed.length % 2 === 0) {
@@ -40,9 +45,9 @@ export function parse(tokens: Array<String>, context: String | undefined = undef
                 throw "Closing a map that was not opened";
             }
         } else if (next === '"') {
-            processed.push(new data.NString(parseString(tokens)))
+            processed.push(new NString(parseString(tokens)))
         } else {
-            processed.push(new data.NSymbol(next));
+            processed.push(new NSymbol(next));
         }
     }
 
