@@ -27,5 +27,5 @@ export const run = {
 };
 
 export function repl() {
-    return cow.say("Hello from the repl!");
+    return "Hello";
 }
