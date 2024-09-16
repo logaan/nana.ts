@@ -74,8 +74,8 @@ environment.set("Module", new NMacroBuiltin((env, args) => {
         const valueExpression = definitions[i + 1];
         const value = valueExpression.evaluate(rollingEnv);
 
-        rollingEnv = new Map(rollingEnv);
         rollingEnv.set(name.name, value);
+        rollingEnv = new Map(rollingEnv);
     }
 
     return new NString("This would normally define a module called " + name.name);

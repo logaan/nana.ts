@@ -1,0 +1,7 @@
+Module tail-call-recursion []
+
+loop Fn([]
+  print("Loop called")
+  loop())
+
+result loop()
