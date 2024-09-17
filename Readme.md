@@ -50,4 +50,9 @@ Nana will support macros, green threads, tail call optimisation, continuations, 
 
 # TODO
 
-- [ ] Macros should return an s-expression and then have it evaluated, rather than just evaluating code as part of their body. Then we can macro-expand to view the results.
+- [ ] Get rid of the mutable stack popping
+- [ ] Make the whole thing use a state machine
+- [ ] Macros should return an s-expression and then have it evaluated, rather
+than just evaluating code as part of their body. Then we can macro-expand to
+view the results.
+- [ ] It would be nice to be able to round-trip NData
