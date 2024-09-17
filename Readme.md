@@ -50,9 +50,12 @@ Nana will support macros, green threads, tail call optimisation, continuations, 
 
 # TODO
 
-- [ ] Get rid of the mutable stack popping
-- [ ] Make the whole thing use a state machine
+- [x] Get rid of the mutable stack popping.
+  - Looks like it's happening in the reader, not eval. So it's fine for now.
+- [ ] Make the whole thing use a state machine.
 - [ ] Macros should return an s-expression and then have it evaluated, rather
 than just evaluating code as part of their body. Then we can macro-expand to
 view the results.
-- [ ] It would be nice to be able to round-trip NData
+- [ ] It would be nice to be able to round-trip NData.
+- [ ] A better parser that can actually handle whitespace in strings.
+- [ ] Parser should tag each node with line and column.
