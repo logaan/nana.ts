@@ -3,9 +3,13 @@
 rm -rf wasm
 mkdir wasm
 
+# Build the wasm
 npx jco componentize dist/out.js --wit src/nana.wit -o wasm/nana.wasm
 
-npx jco transpile wasm/nana.wasm -o wasm/transpiled
+# Run it as a command
+npx jco run wasm/nana.wasm
 
+# Build the JS shell and run it with node
+npx jco transpile wasm/nana.wasm -o wasm/transpiled
 cp src/wasmtest.js wasm/
 node wasm/wasmtest.js

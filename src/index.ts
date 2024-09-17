@@ -2,7 +2,7 @@ import { desugarFile } from './syntaxSugar';
 import { read } from './read';
 import { environment } from './standardLibrary';
 
-export function run(file: String) {
+export function execute(file: String) {
     const desugared = desugarFile(file);
     const parsed = read(desugared);
     const evaluated = parsed[0].evaluate(environment);
@@ -10,7 +10,7 @@ export function run(file: String) {
 }
 
 export function test(): String {
-    return run(`
+    return execute(`
         Module hello-world[]
 
         greeting   "Hello"
@@ -19,4 +19,8 @@ export function test(): String {
         Ignore     Macro([expression] print("Printing what I want instead"))
         macro-test Ignore(print("This text won't be printed"))
     `);
+}
+
+export const run = {
+    run: test
 }

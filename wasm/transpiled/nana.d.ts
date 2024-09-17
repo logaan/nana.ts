@@ -16,5 +16,7 @@ import { WasiIoError } from './interfaces/wasi-io-error.js';
 import { WasiIoPoll } from './interfaces/wasi-io-poll.js';
 import { WasiIoStreams } from './interfaces/wasi-io-streams.js';
 import { WasiRandomRandom } from './interfaces/wasi-random-random.js';
-export function run(file: string): string;
+import { Run } from './interfaces/run.js';
+export const run: typeof Run;
+export function execute(file: string): string;
 export function test(): string;
