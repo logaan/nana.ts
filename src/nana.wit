@@ -1,0 +1,6 @@
+package local:nana;
+
+world nana {
+  export run: func(file: string) -> string;
+  export test: func() -> string;
+}

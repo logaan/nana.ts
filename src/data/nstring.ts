@@ -1,3 +1,6 @@
+import { Environment } from "./environment";
+import { NData } from "./ndata";
+
 // Looks like `"foo"`
 export class NString {
     value: String;
