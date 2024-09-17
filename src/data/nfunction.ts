@@ -1,7 +1,8 @@
 import { NData } from "./ndata";
 import { Environment } from "./environment"
+import { Process } from "../process/process";
 
-export class NFunction {
+export class NFunction implements NData {
     closedOverEnvironment: Environment;
     parameters: Array<String>;
     body: Array<NData>
@@ -12,11 +13,12 @@ export class NFunction {
         this.body = body;
     }
 
-    evaluate(environment: Environment): NData {
+    evaluate(environment: Environment): Process {
         throw "I don't think there's any way to evaluate a Function"
     }
 
-    apply(args: Array<NData>): NData {
+    // TODO: This should have a step for each expression in the body
+    apply(args: Array<NData>): Process {
         var newEnvironment = new Map(this.closedOverEnvironment);
         this.parameters.forEach((param, index) => newEnvironment.set(param, args[index]));
 
