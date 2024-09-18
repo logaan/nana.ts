@@ -1,11 +1,12 @@
 import { NData } from "./ndata";
 import { Environment } from "./environment"
 import { Process } from "../process/process";
+import { Complete } from "../process/complete";
 
 export class NFunctionBuiltin implements NData {
-    body: (args: Array<NData>) => Process;
+    body: (args: Array<NData>) => NData;
 
-    constructor(body: (args: Array<NData>) => Process) {
+    constructor(body: (args: Array<NData>) => NData) {
         this.body = body;
     }
 
@@ -14,7 +15,7 @@ export class NFunctionBuiltin implements NData {
     }
 
     apply(args: Array<NData>): Process {
-        return this.body(args)
+        return new Complete(this.body(args))
     }
 }
 
