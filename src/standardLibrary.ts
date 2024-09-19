@@ -1,12 +1,10 @@
-import { NSymbol } from "./data/nsymbol";
-import { NString } from "./data/nstring";
-import { NTuple } from "./data/collections/ntuple";
 import { NList } from "./data/collections/nlist";
-import { NMap } from "./data/collections/nmap";
-import { NMacro } from "./data/nmacro";
-import { NMacroBuiltin } from "./data/nmacrobuiltin";
-import { NFunction } from "./data/nfunction";
-import { NFunctionBuiltin } from "./data/nfunctionbuiltin";
+import { NFunction } from "./data/functions/nfunction";
+import { NFunctionBuiltin } from "./data/functions/nfunctionbuiltin";
+import { NMacro } from "./data/macros/nmacro";
+import { NMacroBuiltin } from "./data/macros/nmacrobuiltin";
+import { NString } from "./data/scalars/nstring";
+import { NSymbol } from "./data/scalars/nsymbol";
 import { Value } from "./data/types";
 
 export const environment: Map<String, Value> = new Map();
