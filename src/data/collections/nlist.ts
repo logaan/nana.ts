@@ -1,6 +1,6 @@
 import { Value, Environment } from "../types";
 import { Process, Complete } from "../../process/types";
-import { startEvaluatingList as startEvaluatingArray } from "../../process/evalArray"
+import { startEvaluatingList as startEvaluatingArray } from "../../process/evalArrayThen"
 
 export class NList implements Value {
     contents: Array<Value>;

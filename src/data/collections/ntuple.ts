@@ -1,7 +1,7 @@
+import { CompleteProcessThen } from "../../process/completeProcessThen";
+import { startEvaluatingList } from "../../process/evalArrayThen";
 import { Process } from "../../process/types";
-import { NMacro } from "../macros/nmacro";
-import { NMacroBuiltin } from "../macros/nmacrobuiltin";
-import { Environment, Value } from "../types";
+import { Environment, isFunction, isMacro, Value } from "../types";
 
 export class NTuple implements Value {
     contents: Array<Value>;
@@ -12,18 +12,20 @@ export class NTuple implements Value {
 
     evaluate(environment: Environment): Process {
         const expressionToRun = this.contents[0];
-        const argsForExpression = this.contents.slice(1);
 
         if (expressionToRun) {
-            const dataToRun = expressionToRun.evaluate(environment)
-            if (dataToRun instanceof NMacro ||
-                dataToRun instanceof NMacroBuiltin) {
-                return dataToRun.macroApply(environment, argsForExpression);
-            } else {
-                const evaluatedArgs = argsForExpression.map((value) =>
-                    value.evaluate(environment))
-                return dataToRun.apply(evaluatedArgs)
-            }
+            return new CompleteProcessThen(expressionToRun.evaluate(environment), (valueToApply: Value) => {
+                const argsForExpression = this.contents.slice(1);
+                if (isMacro(valueToApply)) {
+                    return valueToApply.macroApply(environment, argsForExpression);
+                } else if (isFunction(valueToApply)) {
+                    return startEvaluatingList(argsForExpression, environment, (evaluatedArgs) => {
+                        return valueToApply.apply(evaluatedArgs)
+                    })
+                } else {
+                    throw "This value can't be applied"
+                }
+            })
         } else {
             throw "Can't evaluate an empty tuple"
         }

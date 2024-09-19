@@ -1,4 +1,4 @@
-import { completeWithLast, startEvaluatingList } from "../../process/evalArray";
+import { completeWithLast, startEvaluatingList } from "../../process/evalArrayThen";
 import { Complete } from "../../process/types";
 import { Value, Function, Environment } from "../types";
 

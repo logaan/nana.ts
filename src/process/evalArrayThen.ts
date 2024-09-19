@@ -2,7 +2,7 @@ import { Value, Environment } from "../data/types";
 import { EvalExpression } from "./evalExpression";
 import { Complete, isComplete, Process, Running } from "./types";
 
-class EvalArray implements Running {
+class EvalArrayThen implements Running {
     todo: Array<Value>;
     done: Array<Value>;
     doing: Process;
@@ -27,11 +27,11 @@ class EvalArray implements Running {
             } else {
                 const newDoing = new EvalExpression(this.todo[0], this.env);
                 const newTodo = this.todo.slice(0);
-                return new EvalArray(newTodo, newDone, newDoing, this.env, this.then);
+                return new EvalArrayThen(newTodo, newDone, newDoing, this.env, this.then);
             }
         } else {
             const newDoing = this.doing.step();
-            return new EvalArray(this.todo, this.done, newDoing, this.env, this.step);
+            return new EvalArrayThen(this.todo, this.done, newDoing, this.env, this.step);
         }
     }
 
@@ -43,7 +43,7 @@ export function startEvaluatingList(todo: Array<Value>, env: Environment, then: 
     } else {
         const doing = new EvalExpression(todo[0], env);
         const newTodo = todo.slice(0);
-        return new EvalArray(newTodo, [], doing, env, then);
+        return new EvalArrayThen(newTodo, [], doing, env, then);
     }
 }
 

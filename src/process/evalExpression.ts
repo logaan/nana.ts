@@ -1,7 +1,6 @@
 import { Value, Environment } from "../data/types";
 import { Running } from "./types";
 
-// TODO: Should this take a `then` argument?
 export class EvalExpression implements Running {
     expression: Value;
     environment: Environment;
