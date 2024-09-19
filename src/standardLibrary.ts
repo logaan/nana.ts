@@ -6,6 +6,7 @@ import { NMacroBuiltin } from "./data/macros/nmacrobuiltin";
 import { NString } from "./data/scalars/nstring";
 import { NSymbol } from "./data/scalars/nsymbol";
 import { Value } from "./data/types";
+import { runUntilComplete } from "./process/types";
 
 export const environment: Map<String, Value> = new Map();
 
@@ -81,7 +82,7 @@ environment.set("Module", new NMacroBuiltin((env, args) => {
         const valueExpression = definitions[i + 1];
         const value = valueExpression.evaluate(rollingEnv);
 
-        rollingEnv.set(name.name, value);
+        rollingEnv.set(name.name, runUntilComplete(value));
         rollingEnv = new Map(rollingEnv);
     }
 

@@ -26,12 +26,12 @@ class EvalArrayThen implements Running {
                 return this.then(newDone);
             } else {
                 const newDoing = new EvalExpression(this.todo[0], this.env);
-                const newTodo = this.todo.slice(0);
+                const newTodo = this.todo.slice(1);
                 return new EvalArrayThen(newTodo, newDone, newDoing, this.env, this.then);
             }
         } else {
             const newDoing = this.doing.step();
-            return new EvalArrayThen(this.todo, this.done, newDoing, this.env, this.step);
+            return new EvalArrayThen(this.todo, this.done, newDoing, this.env, this.then);
         }
     }
 
@@ -42,7 +42,7 @@ export function startEvaluatingList(todo: Array<Value>, env: Environment, then: 
         return then([]);
     } else {
         const doing = new EvalExpression(todo[0], env);
-        const newTodo = todo.slice(0);
+        const newTodo = todo.slice(1);
         return new EvalArrayThen(newTodo, [], doing, env, then);
     }
 }

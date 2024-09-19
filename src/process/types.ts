@@ -17,3 +17,15 @@ export class Complete {
 export function isComplete(process: Process) {
     return "result" in process;
 }
+
+export function isRunning(process: Process) {
+    return "step" in process;
+}
+
+export function runUntilComplete(process: Process): Value {
+    while (!isComplete(process) && isRunning(process)) {
+        process = process.step();
+    }
+
+    return process.result;
+}
