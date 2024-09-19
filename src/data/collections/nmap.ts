@@ -1,13 +1,10 @@
-import { NData } from "./ndata";
-import { Environment } from "./environment"
-import { Process } from "../process/process";
-import { Complete } from "../process/complete";
+import { Complete, Process } from "../../process/types";
+import { Environment, Value } from "../types";
 
-// Looks like `{foo 1 "bar" 2}`
-export class NMap implements NData {
-    contents: Map<NData, NData>;
+export class NMap implements Value {
+    contents: Map<Value, Value>;
 
-    constructor(contents: Map<NData, NData>) {
+    constructor(contents: Map<Value, Value>) {
         this.contents = contents;
     }
 
@@ -23,7 +20,7 @@ export class NMap implements NData {
         return new Complete(new NMap(newMap));
     }
 
-    apply(args: Array<NData>): Process {
+    apply(args: Array<Value>): Process {
         if (args.length === 1) {
             const key = args[0]
             const value = this.contents.get(key)

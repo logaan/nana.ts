@@ -1,17 +1,16 @@
-import { NData } from "./ndata";
-import { Environment } from "./environment"
-import { NMacro } from "./nmacro";
-import { NMacroBuiltin } from "./nmacrobuiltin";
+import { Process } from "../../process/types";
+import { NMacro } from "../macros/nmacro";
+import { NMacroBuiltin } from "../macros/nmacrobuiltin";
+import { Environment, Value } from "../types";
 
-// Looks like `(foo bar baz)`
-export class NTuple {
-    contents: Array<NData>;
+export class NTuple implements Value {
+    contents: Array<Value>;
 
-    constructor(contents: Array<NData>) {
+    constructor(contents: Array<Value>) {
         this.contents = contents;
     }
 
-    evaluate(environment: Environment): NData {
+    evaluate(environment: Environment): Process {
         // If we're going to run a macro then don't eval the arguments, otherwise do
         const expressionToRun = this.contents[0];
         const argsForExpression = this.contents.slice(1);
@@ -31,7 +30,7 @@ export class NTuple {
         }
     }
 
-    apply(args: Array<NData>): NData {
+    apply(args: Array<Value>): Process {
         throw "TODO: Tupple apply"
     }
 }

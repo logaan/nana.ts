@@ -1,9 +1,9 @@
 import { NSymbol } from "./data/nsymbol";
 import { NString } from "./data/nstring";
-import { NTuple } from "./data/ntuple";
-import { NList } from "./data/nlist";
-import { NMap } from "./data/nmap";
-import { NData } from "./data/ndata";
+import { NTuple } from "./data/collections/ntuple";
+import { NList } from "./data/collections/nlist";
+import { NMap } from "./data/collections/nmap";
+import { Value } from "./data/types";
 
 // TODO: We need to keep whitespace so that it can stay in strings
 export function tokenise(input: String) {
@@ -12,7 +12,7 @@ export function tokenise(input: String) {
 }
 
 export function parse(tokens: Array<String>, context: String | undefined = undefined) {
-    const processed: Array<NData> = [];
+    const processed: Array<Value> = [];
 
     var next;
     while (next = tokens.shift()) {

@@ -1,15 +1,15 @@
 import { NSymbol } from "./data/nsymbol";
 import { NString } from "./data/nstring";
-import { NTuple } from "./data/ntuple";
-import { NList } from "./data/nlist";
-import { NMap } from "./data/nmap";
+import { NTuple } from "./data/collections/ntuple";
+import { NList } from "./data/collections/nlist";
+import { NMap } from "./data/collections/nmap";
 import { NMacro } from "./data/nmacro";
 import { NMacroBuiltin } from "./data/nmacrobuiltin";
 import { NFunction } from "./data/nfunction";
 import { NFunctionBuiltin } from "./data/nfunctionbuiltin";
-import { NData } from "./data/ndata";
+import { Value } from "./data/types";
 
-export const environment: Map<String, NData> = new Map();
+export const environment: Map<String, Value> = new Map();
 
 environment.set("Fn", new NMacroBuiltin((env, macroArgs) => {
     const functionArguments: Array<String> = [];
