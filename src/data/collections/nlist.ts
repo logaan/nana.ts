@@ -10,10 +10,10 @@ export class NList implements Value {
     }
 
     evaluate(environment: Environment): Process {
-        return startEvaluatingArray(this.contents, environment, this.wrap);
+        return startEvaluatingArray(this.contents, environment, this.completeAsNList);
     }
 
-    private wrap(done: Value[]) {
+    private completeAsNList(done: Value[]) {
         return new Complete(new NList(done))
     }
 }

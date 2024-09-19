@@ -11,7 +11,6 @@ export class NTuple implements Value {
     }
 
     evaluate(environment: Environment): Process {
-        // If we're going to run a macro then don't eval the arguments, otherwise do
         const expressionToRun = this.contents[0];
         const argsForExpression = this.contents.slice(1);
 
@@ -28,9 +27,5 @@ export class NTuple implements Value {
         } else {
             throw "Can't evaluate an empty tuple"
         }
-    }
-
-    apply(args: Array<Value>): Process {
-        throw "TODO: Tupple apply"
     }
 }
