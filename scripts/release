@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+./scripts/compile
+./scripts/wasm
+
+rm -rf release
+mkdir release
+
+# JS Bundled
+mv dist/out.js release/nana.bundled.js
+
+# JS Source
+pushd dist
+find . | zip ../release/nana.source.js.zip -@
+popd
+
+# WASM binary
+mv wasm/nana.wasm release/nana.wasm
+
+# WASM with JS shell
+pushd wasm
+find . | zip ../release/nana.wasm-with-js-wrapper.zip -@
+popd
