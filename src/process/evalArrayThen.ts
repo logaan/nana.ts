@@ -47,9 +47,24 @@ export function startEvaluatingList(todo: Array<Value>, env: Environment, then: 
     }
 }
 
-// TODO: Make this an alternative to startEvaluatingList that instead drops each
-// intermediate result after evaluation and returns the last one before
-// evaluation
+export function tcoEvaluateList(todo: Array<Value>, env: Environment) {
+    if (todo.length == 0) {
+        // TODO: There's probably a better place to assert this
+        throw "Functions must contain at least one body expression"
+    } else if (todo.length == 1) {
+        return new EvalExpression(todo[0], env);
+    } else {
+        const first = todo[0];
+        const last = todo.slice(-1)[0];
+
+        const middle = todo.slice(1, -1);
+        const doing = new EvalExpression(first, env);
+        const then = (_: Value[]) => new EvalExpression(last, env)
+
+        return new EvalArrayThen(middle, [], doing, env, then);
+    }
+}
+
 export function completeWithLast(done: Value[]): Process {
     return new Complete(done[done.length - 1]);
 }

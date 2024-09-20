@@ -44,16 +44,27 @@ Nana will support macros, green threads, tail call optimisation, continuations, 
 
 ## Installation
 
-    cargo install wepl --locked
-    cargo install --git https://github.com/bytecodealliance/wasi-virt
+For running the build scripts:
 
+```
+npm install @bytecodealliance/componentize-js
+npm install @bytecodealliance/jco
+npm install -g esbuild
+```
+
+Optional:
+
+```
+cargo install wepl --locked
+cargo install --git https://github.com/bytecodealliance/wasi-virt
+```
 
 # TODO
 
 - [x] Get rid of the mutable stack popping.
   - Looks like it's happening in the reader, not eval. So it's fine for now.
 - [x] Make the whole thing use a state machine.
-- [ ] Tail call optimisation
+- [x] Tail call optimisation
 - [ ] A better parser that can actually handle whitespace in strings.
 - [ ] Macros should return an s-expression and then have it evaluated, rather
 than just evaluating code as part of their body. Then we can macro-expand to

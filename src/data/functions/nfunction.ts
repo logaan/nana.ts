@@ -1,4 +1,4 @@
-import { completeWithLast, startEvaluatingList } from "../../process/evalArrayThen";
+import { tcoEvaluateList } from "../../process/evalArrayThen";
 import { Complete } from "../../process/types";
 import { Value, Function, Environment } from "../types";
 
@@ -21,6 +21,6 @@ export class NFunction implements Function, Value {
         var newEnvironment = new Map(this.closedOverEnvironment);
         this.parameters.forEach((param, index) => newEnvironment.set(param, args[index]));
 
-        return startEvaluatingList(this.body, newEnvironment, completeWithLast)
+        return tcoEvaluateList(this.body, newEnvironment);
     }
 }
