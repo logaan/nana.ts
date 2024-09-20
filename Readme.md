@@ -66,4 +66,4 @@ view the results.
 - JS Source (.zip)
 - JS Bundle (.js)
 - WASM file (.wasm)
-- WASM + JS Wrapper (.zip)
+- WASM + JS Bindings (.zip)

@@ -11,13 +11,13 @@ mv dist/out.js release/nana.bundled.js
 
 # JS Source
 pushd dist
-find . | zip ../release/nana.source.js.zip -@
+find . | zip ../release/nana.source-js.zip -@
 popd
 
 # WASM binary
 mv wasm/nana.wasm release/nana.wasm
 
-# WASM with JS shell
+# WASM with JS bindings
 pushd wasm
-find . | zip ../release/nana.wasm-with-js-wrapper.zip -@
+find . | zip ../release/nana.wasm-with-js-bindings.zip -@
 popd

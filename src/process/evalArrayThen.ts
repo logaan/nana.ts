@@ -47,6 +47,9 @@ export function startEvaluatingList(todo: Array<Value>, env: Environment, then: 
     }
 }
 
+// TODO: Make this an alternative to startEvaluatingList that instead drops each
+// intermediate result after evaluation and returns the last one before
+// evaluation
 export function completeWithLast(done: Value[]): Process {
     return new Complete(done[done.length - 1]);
 }
