@@ -71,10 +71,3 @@ than just evaluating code as part of their body. Then we can macro-expand to
 view the results.
 - [ ] Parser should tag each node with line and column.
 - [ ] It would be nice to be able to round-trip NData.
-
-# Release artifacts
-
-- JS Source (.zip)
-- JS Bundle (.js)
-- WASM file (.wasm)
-- WASM + JS Bindings (.zip)
