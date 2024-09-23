@@ -24,16 +24,27 @@ export function test(): String {
 
         Ignore     Macro([expression] print("Printing what I want instead"))
         macro-test Ignore(print("This text won't be printed"))
+    `);
 
-        loop       Fn([] print("This is a loop that never ends...") loop())
-        #loop-test  loop()
+    runUntilComplete(thread1);
+
+    return "ok";
+}
+
+export function threadTest(): String {
+    const thread1 = execute(`
+        Module hello-world[]
+
+        loop       Fn([] print("printing_from_thread_one...") loop())
+        loop-test  loop()
     `);
 
     const thread2 = execute(`
         Module thread-two[]
-        loop       Fn([] print("This is thread two...") loop())
-        #loop-test  loop()
-        `);
+
+        loop       Fn([] print("printing_from_thread_two...") loop())
+        loop-test  loop()
+    `);
 
     runUntilComplete(thread1, thread2);
 
@@ -41,5 +52,5 @@ export function test(): String {
 }
 
 export const run = {
-    run: test
+    run: threadTest
 }

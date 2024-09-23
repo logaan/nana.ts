@@ -5,8 +5,9 @@ import { NMacro } from "./data/macros/nmacro";
 import { NMacroBuiltin } from "./data/macros/nmacrobuiltin";
 import { NString } from "./data/scalars/nstring";
 import { NSymbol } from "./data/scalars/nsymbol";
-import { Value } from "./data/types";
-import { Complete, runUntilComplete } from "./process/types";
+import { Environment, Value } from "./data/types";
+import { startEvaluatingList } from "./process/evalArrayThen";
+import { Complete, Process, Running, runUntilComplete } from "./process/types";
 
 export const environment: Map<String, Value> = new Map();
 
@@ -71,23 +72,46 @@ environment.set("Module", new NMacroBuiltin((env, args) => {
         throw "Module definitions must come in pairs of names and values"
     }
 
-    var rollingEnv = new Map(env);
-    for (var i = 0; i <= definitions.length - 2; i += 2) {
-        const name = definitions[i];
+    return new ModuleStep(env, definitions);
+}));
 
-        if (!(name instanceof NSymbol)) {
-            throw "Module definition names must be symbols"
-        }
+class ModuleStep implements Running {
+    rollingEnv: Environment;
+    definitions: Value[];
 
-        const valueExpression = definitions[i + 1];
-        const value = valueExpression.evaluate(rollingEnv);
-
-        rollingEnv.set(name.name, runUntilComplete(value));
-        rollingEnv = new Map(rollingEnv);
+    // TODO: We need a running process
+    // TODO: Functions may need a mutable environment field so they can recur
+    // because their definition may take many steps 
+    constructor(rollingEnv: Environment, definitions: Value[]) {
+        this.rollingEnv = rollingEnv;
+        this.definitions = definitions;
     }
 
-    return new Complete(new NString("This would normally define a module called " + name.name));
-}));
+    step(): Process {
+        if (this.definitions.length === 0) {
+            return new Complete(new NString("Module is done"));
+        } else {
+            const name = this.definitions[0];
+
+            if (!(name instanceof NSymbol)) {
+                throw "Module definition names must be symbols"
+            }
+
+            const valueExpression = this.definitions[1];
+            const newEnv = new Map(this.rollingEnv);
+            const value = valueExpression.evaluate(newEnv);
+
+            // TODO: There should really be a version of this for single values
+            return startEvaluatingList([valueExpression], newEnv, (values: Value[]): Process => {
+                const value = values[0];
+                newEnv.set(name.name, value);
+
+                return new ModuleStep(newEnv, this.definitions.slice(2))
+            });
+        }
+    }
+
+}
 
 // TODO: This shouldn't be available without a wasm component
 environment.set("print", new NFunctionBuiltin((args) => {
