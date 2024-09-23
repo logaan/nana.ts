@@ -6,7 +6,7 @@ import { NMacroBuiltin } from "./data/macros/nmacrobuiltin";
 import { NString } from "./data/scalars/nstring";
 import { NSymbol } from "./data/scalars/nsymbol";
 import { Value } from "./data/types";
-import { runUntilComplete } from "./process/types";
+import { Complete, runUntilComplete } from "./process/types";
 
 export const environment: Map<String, Value> = new Map();
 
@@ -26,7 +26,7 @@ environment.set("Fn", new NMacroBuiltin((env, macroArgs) => {
         throw "The first argument to Fn must be a List"
     }
 
-    return new NFunction(env, functionArguments, macroArgs.slice(1));
+    return new Complete(new NFunction(env, functionArguments, macroArgs.slice(1)));
 }))
 
 environment.set("Macro", new NMacroBuiltin((env, macroArgs) => {
@@ -45,7 +45,7 @@ environment.set("Macro", new NMacroBuiltin((env, macroArgs) => {
         throw "The first argument to Macro must be a List"
     }
 
-    return new NMacro(functionArguments, macroArgs.slice(1));
+    return new Complete(new NMacro(functionArguments, macroArgs.slice(1)));
 }))
 
 environment.set("Module", new NMacroBuiltin((env, args) => {
@@ -86,7 +86,7 @@ environment.set("Module", new NMacroBuiltin((env, args) => {
         rollingEnv = new Map(rollingEnv);
     }
 
-    return new NString("This would normally define a module called " + name.name);
+    return new Complete(new NString("This would normally define a module called " + name.name));
 }));
 
 // TODO: This shouldn't be available without a wasm component

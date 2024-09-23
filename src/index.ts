@@ -6,12 +6,16 @@ import { runUntilComplete } from './process/types';
 export function execute(file: String) {
     const desugared = desugarFile(file);
     const parsed = read(desugared);
-    const evaluated = runUntilComplete(parsed[0].evaluate(environment));
-    return "ok";
+    return parsed[0].evaluate(environment)
 }
 
+// TODO: We need a way for new threads to trickle all the way back up to the
+// top.
+
+// TODO: Macros need to stop using runUntilComplete. It means they're blocking
+// until they're done. And we need the macro for recursion.
 export function test(): String {
-    return execute(`
+    const thread1 = execute(`
         Module hello-world[]
 
         greeting   "Hello"
@@ -22,8 +26,18 @@ export function test(): String {
         macro-test Ignore(print("This text won't be printed"))
 
         loop       Fn([] print("This is a loop that never ends...") loop())
-        # loop-test  loop()
+        #loop-test  loop()
     `);
+
+    const thread2 = execute(`
+        Module thread-two[]
+        loop       Fn([] print("This is thread two...") loop())
+        #loop-test  loop()
+        `);
+
+    runUntilComplete(thread1, thread2);
+
+    return "ok";
 }
 
 export const run = {
