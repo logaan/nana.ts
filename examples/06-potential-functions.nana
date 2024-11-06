@@ -1,0 +1,79 @@
+# TODO: Hyphens should be part of identifyers
+# TODO: 2 spaces should be the default tab size for nana
+# TODO: Closing parens shouldn't get their own line
+
+# Flat tagged tuple
+# Fn(args* body)
+Fn(n sum(n n))
+
+map(Fn(n sum(n n))
+    [2 4 6 8])
+
+# Fn(List[args] body*)
+map(Fn([n] sum(n n))
+    [2 4 6 8])
+
+# Clojure
+(map (fn [n] (+ n n))
+     [2 4 6 8])
+
+# Nana as it is
+Module fizzbuzz
+  [wasi:http/stdout
+   wasi:streams/output-stream]
+
+num-to-txt Fn([num]
+  Cond(zero?(mod(num 15)) "Fizzbuzz"
+        zero?(mod(num 3)) "Fizz"
+        zero?(mod(num 5)) "Buzz"
+        default:          n))
+
+list-to-txt Fn([list]
+  map(num-to-text list))
+
+output Fn([max]
+  Let([lines  list-to-text(range(1 100))
+       stdout stdout/get-stdout()]
+    For([line lines]
+      stdout.write(line))))
+      
+# Nana with haml syntax
+Module fizzbuzz
+  [wasi:http/stdout
+   wasi:streams/output-stream]
+
+num-to-txt
+Fn
+  [num]
+  Cond
+    zero?(mod(num 15)) "Fizzbuzz"
+    zero?(mod(num 3)) "Fizz"
+    zero?(mod(num 5)) "Buzz"
+    default:          n
+
+list-to-txt
+Fn
+  [list]
+  map(num-to-text list)
+
+output
+Fn
+  [max]
+  Let
+    [lines  list-to-text(range(1 100))
+     stdout stdout/get-stdout()]
+    For
+      [line lines]
+      stdout.write line
+
+# Haml's no good.
+# How can you tell whether
+#
+#   stdout.write
+#     line
+#
+# means (stdout.write line)
+# or (stdout.write (line))
+#
+
+# TOML, YAML, 

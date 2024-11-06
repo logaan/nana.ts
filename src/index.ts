@@ -9,11 +9,6 @@ export function execute(file: String) {
     return parsed[0].evaluate(environment)
 }
 
-// TODO: We need a way for new threads to trickle all the way back up to the
-// top.
-
-// TODO: Macros need to stop using runUntilComplete. It means they're blocking
-// until they're done. And we need the macro for recursion.
 export function test(): String {
     const thread1 = execute(`
         Module hello-world[]
@@ -31,6 +26,11 @@ export function test(): String {
     return "ok";
 }
 
+// TODO: Threads should be able to be initiated from within a source file and
+// should return a promise that will be resolved once the thread completes.
+// TODO: We need a way for new threads to trickle all the way back up to the
+// top OR this is where we introduce the process local mutable db. Threads get
+// added as a side effect.
 export function threadTest(): String {
     const thread1 = execute(`
         Module hello-world[]

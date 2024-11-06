@@ -1,0 +1,231 @@
+# Funcs are not the same as Fns because Funcs need to declare names and types
+# for the WIT
+# Func is used to match the term in WIT
+#
+# An interface is probaby the closest thing to a module. It has imports and
+# exports. Kind of like a dependency inverted class. I think in nana maybe
+# it doesn't make so much sense for interfaces or modules to be the top level
+# entity. Instead that should just be a package. Which is really just a zone
+# where things can refer to one another.
+#
+# In normal software you can refer to anything in the whole project, even to
+# things from libraries. But with wasm components the only public connections
+# between things are when worlds are composed together. Privately references can
+# go anywhere within a package.
+#
+# - Each file has a package.
+# - Multiple files within the same directory may share a package.
+# - All code within the same package may refer to any other code within that
+# package.
+#
+# - A package may contain many worlds.
+# - Worlds are the smallest block in a component.
+# - Worlds may be composed together into new, larger components.
+#
+# - A package may contain many interfaces.
+# - A world may contain many interfaces.
+
+# Imports and exports may be interfaces or functions. An interface may be
+# referencing a definition elsewhere in this package, or another package, or
+# may be an inline definition. Functions must refer to the whole function
+# signature, not just a name.
+
+# Include other worlds. Pulling all their imports and exports into this world.
+
+# I think this is achieveable if macros take the remaining token list and return
+# a new one. They'll probably need to macro-expand each item they read from the
+# token list, so that they don't tread on the toes of other macros.
+
+# WIT Identifiers
+# - Identifiers are restricted to ASCII kebab-case - sequences of words, separated by single hyphens.
+#   - Double hyphens (--) are not allowed.
+#   - Hyphens aren't allowed at the beginning or end of the sequence, only between words.
+# - An identifier may be preceded by a single % sign.
+#   - This is required if the identifier would otherwise be a WIT keyword. For example, interface is not a legal identifier, but %interface is legal.
+# - Each word in the sequence must begin with an ASCII letter, and may contain only ASCII letters and digits.
+#   - A word cannot begin with a digit.
+#   - A word cannot contain a non-ASCII Unicode character.
+#   - A word cannot contain punctuation, underscores, etc.
+# - Each word must be either all lowercase or all UPPERCASE.
+#   - Different words in the identifier may have different cases. For example, WIT-demo is allowed.
+# - An identifier cannot be a WIT keyword such as interface (unless preceded by a % sign).
+
+# # WIT Types
+#
+# ## Primatives
+# - bool	            
+# - s8, s16, s32, s64
+# - u8, u16, u32, u64
+# - f32, f64	        
+# - char	            
+# - string	          
+#
+# ## Builtin variants
+# - list<T>
+# - option<T>
+# - result<T, E>
+# - tuple<>, tuple<A>, tuple<A, b>, tuple<A, B, ..N>
+# 
+# ## User defined types
+# User-defined types can't be generic (that is, parameterised by type). Only
+# built-in types can be generic.
+#
+# ### Records
+# record customer {
+#     id: u64,
+#     name: string,
+#     picture: option<list<u8>>,
+#     account-manager: employee,
+# }
+
+Record customer {
+  id              u64
+  name            string
+  picture         option<list<u8>>
+  account-manager employee
+}
+
+# ### Variants
+# variant allowed-destinations {
+#     none,
+#     any,
+#     restricted(list<address>),
+# }
+
+Variant allowed-destinations [
+  none[]
+  any[]
+  restricted[list<address>]
+]
+
+# ### Enums
+# enum color {
+#     hot-pink,
+#     lime-green,
+#     navy-blue,
+# }
+
+Enum color [
+  hot-pink
+  lime-green
+  navy-blue
+]
+
+# ### Resources
+# resource blob {
+#     constructor(init: list<u8>);
+#     write: func(bytes: list<u8>);
+#     read: func(n: u32) -> list<u8>;
+#     merge: static func(lhs: blob, rhs: blob) -> blob;
+# }
+
+Resource blob [
+  Constructor[init list<u8>] blob
+    undefined
+
+  Method write[self borrow<blob> bytes list<u8>] none
+    undefined
+
+  Method read[self borrow<blob> n u32]
+    undefined
+
+  Static-Fn merge[lhs blob rhs blob] blob
+    undefined
+]
+
+
+# ### Flags
+# flags allowed-methods {
+#     get,
+#     post,
+#     put,
+#     delete,
+# }
+
+Flags allowed-methods [
+  get
+  post
+  put
+  delete
+]
+
+# ### Type alias
+# type buffer = list<u8>;
+# type http-result = result<http-response, http-error>;
+
+Type buffer
+
+# ### Functions
+# do-nothing: func();
+# print: func(message: string);
+# add: func(a: u64, b: u64) -> u64;
+# lookup: func(store: kv-store, key: string) -> option<string>;
+# get-customers-paged: func(cont: continuation-token)
+#    -> (customers: list<customer>, cont: continuation-token);
+
+Func do-nothing [] _
+  undefined
+
+Func print [message string] _
+  undefined
+
+Func add [a u64 b u64] u64
+  undefined
+
+Func lookup [store kv-store key string] option<string>
+  undefined
+
+Func get-customers-paged [cond continuation-token]
+     {customers list<customer> cont continuation-token}
+  undefined
+
+# ## Interfaces
+#
+# interface canvas {
+#     type canvas-id = u64;
+# 
+#     record point {
+#         x: u32,
+#         y: u32,
+#     }
+# 
+#     draw-line: func(canvas: canvas-id, from: point, to: point);
+# }
+# 
+# interface types {
+#     type dimension = u32;
+#     record point {
+#         x: dimension,
+#         y: dimension,
+#     }
+# }
+# 
+# interface canvas {
+#     use types.{dimension, point};
+#     type canvas-id = u64;
+#     draw-line: func(canvas: canvas-id, from: point, to: point, thickness: dimension);
+# }
+# ## Worlds
+#
+# interface printer {
+#     print: func(text: string);
+# }
+# 
+# interface error-reporter {
+#     report-error: func(error-message: string);
+# }
+# 
+# world multi-function-device {
+#     // The component implements the `printer` interface
+#     export printer;
+# 
+#     // The component implements the `scan` function
+#     export scan: func() -> list<u8>;
+# 
+#     // The component needs to be supplied with an `error-reporter`
+#     import error-reporter;
+# }
+# 
+# ## Packages
+# package documentation:example;
+# package documentation:example@1.0.1;

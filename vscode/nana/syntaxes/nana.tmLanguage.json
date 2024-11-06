@@ -30,7 +30,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.nana",
-					"match": "\\b([A-Z][a-z]*)\\b"
+					"match": "\\b([A-Z][a-z-\/!?.:@%]*)\\b"
 				}
 			]
 		},
@@ -48,7 +48,7 @@
 		"function-calls": {
 			"patterns": [
 				{
-					"match": "([a-z][A-Za-z]*)\\(",
+					"match": "([a-z][A-Za-z-\/!?.:@%]*)\\(",
 					"captures": {
 						"1": {
 							"name": "entity.name.function.nana"
