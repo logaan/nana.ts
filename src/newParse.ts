@@ -5,6 +5,9 @@ console.log("Start")
 
 enum TokenKind {
     MacroName,
+    // TODO: Name should probably be like 3 different things. One PackageName,
+    // WorldName, InterfaceName, ImportPath, Type, etc. match the WIT grammar:
+    // https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md
     Name,
     Hole,
     Number,
