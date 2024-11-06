@@ -1,8 +1,10 @@
-Package "nana:examples@0.0.1"
+Package nana:examples@0.0.1
 
-World "fizzbuzz" [
-  import("wasi:cli/stdout")
-  import("wasi:streams/output-stream")
+World fizzbuzz [
+  Import wasi:cli/stdout
+  Import wasi:streams/output-stream
+
+  Export print-fizzbuzz [max u8] _
 ]
 
 Func num-to-txt [num u8] string
@@ -15,7 +17,7 @@ Func num-to-txt [num u8] string
 Func list-to-txt [list list<u8>] list<string>
   map(num-to-text list)
 
-Func output [max u8] _
+Func print-fizzbuzz [max u8] _
   Let{lines  list-to-text(range(1 100))
       stdout stdout/get-stdout()}
     For[line lines]

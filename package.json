@@ -5,6 +5,7 @@
   "dependencies": {
     "@bytecodealliance/componentize-js": "^0.12.0",
     "@bytecodealliance/jco": "^1.6.0",
-    "@types/node": "^22.1.0"
+    "@types/node": "^22.1.0",
+    "typescript-parsec": "^0.3.4"
   }
 }
